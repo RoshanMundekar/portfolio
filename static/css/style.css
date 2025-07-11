@@ -319,40 +319,115 @@ h3.my-profession
     font-size: 20px;
     color: var(--text-black-700);
 }
-.home .home-img
-{
-    flex: 0 0 40%;
-    max-width: 40%; 
-    text-align: center;
+.home-img {
     position: relative;
+    width: 100%;
+    max-width: 400px; /* Adjust based on your needs */
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.home-img::after
-{
+
+.home-img img {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Match your max-width */
+    border-radius: 50%;
+    object-fit: cover;
+    aspect-ratio: 1/1; /* Ensures perfect circle */
+    animation: gentleSpin 20s linear infinite;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    border: 8px solid rgba(var(--skin-color-rgb), 0.2);
+    transition: all 0.4s ease;
+    transform-style: preserve-3d;
+}
+
+/* Keyframes for a gentle 3D spin */
+@keyframes gentleSpin {
+    0% {
+        transform: rotateY(0) scale(1);
+    }
+    50% {
+        transform: rotateY(180deg) scale(0.98);
+    }
+    100% {
+        transform: rotateY(360deg) scale(1);
+    }
+}
+
+/* Hover effects */
+.home-img:hover img {
+    animation-play-state: paused;
+    border-color: rgba(var(--skin-color-rgb), 0.4);
+    box-shadow: 0 0 35px rgba(var(--skin-color-rgb), 0.3);
+    transform: scale(1.02);
+}
+
+/* Glow effect */
+.home-img::after {
     content: '';
     position: absolute;
-    height: 80px;
-    width: 80px;
-    border-bottom: 10px solid var(--skin-color);
-    border-right: 10px solid var(--skin-color);
-    right: 20px;
-    bottom: -40px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, 
+               rgba(var(--skin-color-rgb), 0.1) 0%, 
+               transparent 70%);
+    animation: pulseGlow 3s ease-in-out infinite alternate;
 }
-.home-img::before
-{
-    content: '';
-    position: absolute;
-    height: 80px;
-    width: 80px;
-    border-top: 10px solid var(--skin-color);
-    border-left: 10px solid var(--skin-color);
-    left: -20px;
-    top: -40px;
+
+@keyframes pulseGlow {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
 }
-.home .home-img img
-{
-    margin: auto;
-    border-radius: 5px;
-    height: 400px;
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .home-img {
+        max-width: 280px;
+        margin-top: 30px;
+    }
+    
+    .home-img img {
+        animation: gentleSpinMobile 20s linear infinite;
+        border-width: 6px;
+    }
+    
+    /* Simplified spin for mobile */
+    @keyframes gentleSpinMobile {
+        0% {
+            transform: rotate(0) scale(1);
+        }
+        100% {
+            transform: rotate(360deg) scale(1);
+        }
+    }
+    
+    .home-img::after {
+        display: none; /* Disable glow on mobile for performance */
+    }
+}
+
+/* Fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 1/1) {
+    .home-img img {
+        height: 400px;
+        width: 400px;
+    }
+    
+    @media (max-width: 991px) {
+        .home-img img {
+            height: 280px;
+            width: 280px;
+        }
+    }
 }
 /* about */
 .about .about-content
